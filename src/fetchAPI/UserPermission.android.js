@@ -1,10 +1,8 @@
 import {check, request, PERMISSIONS, RESULTS} from 'react-native-permissions';
 
-export default class Permission {
+    export const checkLocationPermission = async () => {
 
-    static checkLocationPermission = async () => {
-
-        let permissionStatus = await check(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION)
+        const permissionStatus = await check(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION)
         return new Promise((resolve, reject) => {
             if (permissionStatus === RESULTS.GRANTED || permissionStatus === RESULTS.LIMITED) {
                 resolve(true)
@@ -27,4 +25,3 @@ export default class Permission {
             } else reject('unexpected check result')
         })
     }
-}
