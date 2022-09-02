@@ -75,6 +75,8 @@ PODS:
   - glog (0.3.5)
   - libevent (2.1.12)
   - OpenSSL-Universal (1.1.1100)
+  - Permission-LocationWhenInUse (3.6.1):
+    - RNPermissions
   - RCT-Folly (2021.06.28.00-v2):
     - boost
     - DoubleConversion
@@ -387,6 +389,7 @@ DEPENDENCIES:
   - FlipperKit/SKIOSNetworkPlugin (= 0.125.0)
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
   - OpenSSL-Universal (= 1.1.1100)
+  - Permission-LocationWhenInUse (from `../node_modules/react-native-permissions/ios/LocationWhenInUse`)
   - RCT-Folly (from `../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`)
   - RCTRequired (from `../node_modules/react-native/Libraries/RCTRequired`)
   - RCTTypeSafety (from `../node_modules/react-native/Libraries/TypeSafety`)
@@ -448,6 +451,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/React/FBReactNativeSpec"
   glog:
     :podspec: "../node_modules/react-native/third-party-podspecs/glog.podspec"
+  Permission-LocationWhenInUse:
+    :path: "../node_modules/react-native-permissions/ios/LocationWhenInUse"
   RCT-Folly:
     :podspec: "../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec"
   RCTRequired:
@@ -526,6 +531,7 @@ SPEC CHECKSUMS:
   glog: 3d02b25ca00c2d456734d0bcff864cbc62f6ae1a
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   OpenSSL-Universal: ebc357f1e6bc71fa463ccb2fe676756aff50e88c
+  Permission-LocationWhenInUse: 3ba99e45c852763f730eabecec2870c2382b7bd4
   RCT-Folly: b9d9fe1fc70114b751c076104e52f3b1b5e5a95a
   RCTRequired: bd9d2ab0fda10171fcbcf9ba61a7df4dc15a28f4
   RCTTypeSafety: e44e139bf6ec8042db396201834fc2372f6a21cd
@@ -558,6 +564,6 @@ SPEC CHECKSUMS:
   Yoga: ff994563b2fd98c982ca58e8cd9db2cdaf4dda74
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: 6c924dfbe33686eb80bdb2e74642e47c8ab55209
+PODFILE CHECKSUM: 8cd668360b0c6dde504e14d74daef7bebd66ab3a
 
 COCOAPODS: 1.11.3
