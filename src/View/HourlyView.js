@@ -2,14 +2,9 @@ import {FlatList, Image, StyleSheet, Text, View} from "react-native";
 import React from 'react';
 import {IconUtils} from "../utils/IconUtils";
 import {TemperatureUnitConversion} from "../utils/TemperatureUnitConversion";
+import {TimeFormatter} from "../utils/TimeFormatter";
 
 const HourlyList = (props) => {
-
-    const formattedTime = (time) => {
-        return new Date(time * 1000)
-            .toLocaleTimeString([], {timeZone: props.timezone, hour12: false, })
-            .replace(/(:\d{2}| [AP]M)$/, "")
-    }
 
     const itemToRender = ({item}) => {
        const convertedTemperature = TemperatureUnitConversion.fahrenheitToCelsius(item.temperature)
@@ -18,7 +13,7 @@ const HourlyList = (props) => {
             <View>
                 <View style={styles.flatList}>
                     <Text style={styles.item}>
-                        {formattedTime(item.time)}
+                        {TimeFormatter.formattedTime(item.time)}
                     </Text>
                 </View>
                 <View style={styles.flatList}>

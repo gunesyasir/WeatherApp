@@ -16,12 +16,9 @@ import {getUserLocation} from "./src/fetchAPI/GetLocation";
 import {fetchFromWeatherApi} from "./src/fetchAPI/Forecast";
 import HourlyList from "./src/View/HourlyView";
 import DailyList from "./src/View/DailyView";
-import {TemperatureUnitConversion} from "./src/utils/TemperatureUnitConversion";
-import {IconUtils} from "./src/utils/IconUtils";
 
 const App = () => {
     const [hourlyData, setHourlyData] = useState(null)
-    const [timezone, setTimezone] = useState(null)
     const [dailyData, setDailyData] = useState(null)
     const [currentlyTemperature, setCurrentlyTemperature] = useState(null)
     const [currentlyIcon, setCurrentlyIcon] = useState(null)
@@ -37,7 +34,6 @@ const App = () => {
                                     setCurrentlyTemperature(weatherData.currently.temperature)
                                     setCurrentlyIcon(weatherData.currently.icon)
                                     setHourlyData(weatherData.hourly.data)
-                                    setTimezone(weatherData.timezone)
                                     setDailyData(weatherData.daily.data)
                                 }
                             )
@@ -68,7 +64,7 @@ const App = () => {
                     currentlyIcon = {currentlyIcon}
                     currentlyTemperature = {currentlyTemperature} />
 
-                <HourlyList data = {hourlyData} timezone = {timezone}/>
+                <HourlyList data = {hourlyData} />
 
             </ImageBackground>
         </SafeAreaView>
