@@ -12,7 +12,7 @@ export const getUserLocation = () => {
             (error) => {
                 reject(error)
             },
-            { enableHighAccuracy: true, timeout: 5000, maximumAge: 60000 }
+            { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
         )
     })
 }

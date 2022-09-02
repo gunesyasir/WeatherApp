@@ -1,4 +1,3 @@
-import {resolve} from "@babel/core/lib/vendor/import-meta-resolve";
 import {WeatherResponse} from "../Model/Models";
 
 export const fetchFromWeatherApi = (latitude, longitude) : Promise<WeatherResponse> => {
@@ -15,17 +14,6 @@ export const fetchFromWeatherApi = (latitude, longitude) : Promise<WeatherRespon
             },
         )
     })
-   /*const response = await fetch(url)
-    response.json().then(
-        async response => {
-            console.log(await response)
-            return await response
-            //implement promise
-        },
-        error => {
-
-        },
-    )*/
 }
 
 
