@@ -66,7 +66,7 @@ const App = () => {
 const styles = StyleSheet.create({
   safeAreaContainer: {
     flex: 1,
-    backgroundColor: 'skyblue',
+    backgroundColor: '#3a93cf',
   },
 
   image: {
