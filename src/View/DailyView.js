@@ -50,6 +50,7 @@ const DailyList = props => {
           />
         }
         ListHeaderComponentStyle={{height: verticalFlatListHeight / 2}}
+        showsVerticalScrollIndicator={false}
       />
     </View>
   );

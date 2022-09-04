@@ -30,6 +30,7 @@ const HourlyList = props => {
         renderItem={itemToRender}
         keyExtractor={(item, index) => index}
         horizontal={true}
+        showsHorizontalScrollIndicator={false}
       />
     </View>
   );
