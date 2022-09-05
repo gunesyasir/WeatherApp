@@ -11,6 +11,7 @@ import {getUserLocation} from './src/fetchAPI/GetLocation';
 import {fetchFromWeatherApi} from './src/fetchAPI/Forecast';
 import HourlyList from './src/View/HourlyView';
 import DailyList from './src/View/DailyView';
+import {LocationAlert} from "./src/View/AlertView";
 
 const App = () => {
   const [hourlyData, setHourlyData] = useState(null);
@@ -33,8 +34,8 @@ const App = () => {
             );
           });
         } else {
-          //use old data
-          console.log('use old data');
+            LocationAlert()
+          console.log('no permission given, alert');
         }
       },
       error => {
@@ -43,24 +44,24 @@ const App = () => {
     );
   }, []);
 
-  return (
-    <SafeAreaView style={styles.safeAreaContainer}>
-      <ImageBackground
-        source={require('./src/assets/background2.jpg')}
-        resizeMode="cover"
-        style={styles.image}>
-        <StatusBar backgroundColor={Colors.translucent} />
+    return (
+        <SafeAreaView style={styles.safeAreaContainer}>
+            <ImageBackground
+                source={require('./src/assets/background2.jpg')}
+                resizeMode="cover"
+                style={styles.image}>
+                <StatusBar backgroundColor={Colors.translucent} />
 
-        <DailyList
-          dailyData={dailyData}
-          currentlyIcon={currentlyIcon}
-          currentlyTemperature={currentlyTemperature}
-        />
+                <DailyList
+                    dailyData={dailyData}
+                    currentlyIcon={currentlyIcon}
+                    currentlyTemperature={currentlyTemperature}
+                />
 
-        <HourlyList data={hourlyData} />
-      </ImageBackground>
-    </SafeAreaView>
-  );
+                <HourlyList data={hourlyData} />
+            </ImageBackground>
+        </SafeAreaView>
+    );
 };
 
 const styles = StyleSheet.create({
