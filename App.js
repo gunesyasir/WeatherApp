@@ -14,10 +14,11 @@ import DailyList from './src/View/DailyView';
 import {LocationAlert} from "./src/View/AlertView";
 
 const App = () => {
+
   const [hourlyData, setHourlyData] = useState(null);
   const [dailyData, setDailyData] = useState(null);
   const [currentlyTemperature, setCurrentlyTemperature] = useState(null);
-  const [currentlyIcon, setCurrentlyIcon] = useState(null);
+  const [currentlyIcon, setCurrentlyIcon] = useState("partly-cloudy-day");
 
   useEffect(() => {
     checkLocationPermission().then(
@@ -35,7 +36,6 @@ const App = () => {
           });
         } else {
             LocationAlert()
-          console.log('no permission given, alert');
         }
       },
       error => {
@@ -45,12 +45,13 @@ const App = () => {
   }, []);
 
     return (
-        <SafeAreaView style={styles.safeAreaContainer}>
-            <ImageBackground
-                source={require('./src/assets/background2.jpg')}
-                resizeMode="cover"
-                style={styles.image}>
-                <StatusBar backgroundColor={Colors.translucent} />
+        <ImageBackground
+            source={require('./src/assets/background2.jpg')}
+            resizeMode="cover"
+            style={styles.image}>
+            <SafeAreaView style={styles.safeAreaContainer}>
+
+                <StatusBar backgroundColor={Colors.translucent}/>
 
                 <DailyList
                     dailyData={dailyData}
@@ -58,16 +59,17 @@ const App = () => {
                     currentlyTemperature={currentlyTemperature}
                 />
 
-                <HourlyList data={hourlyData} />
-            </ImageBackground>
-        </SafeAreaView>
+                <HourlyList data={hourlyData}/>
+
+            </SafeAreaView>
+        </ImageBackground>
     );
 };
 
 const styles = StyleSheet.create({
   safeAreaContainer: {
     flex: 1,
-    backgroundColor: '#3a93cf',
+    // backgroundColor: '#3a93cf',
   },
 
   image: {

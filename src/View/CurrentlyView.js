@@ -4,20 +4,34 @@ import {TemperatureUnitConversion} from '../utils/TemperatureUnitConversion';
 import {IconUtils} from '../utils/IconUtils';
 
 const CurrentlyView = props => {
-  return (
-    <View style={styles.currentlyView}>
-      <Image
-        source={IconUtils.iconPath(props.currentlyIcon)}
-        style={{width: 130, height: 130}}
-      />
-      <Text style={styles.currentlyData}>
-        {TemperatureUnitConversion.fahrenheitToCelsius(
-          props.currentlyTemperature,
-        )}
-        {'\u2103'}
-      </Text>
-    </View>
-  );
+  if (props.currentlyTemperature === null){
+      return (
+          <View style={styles.currentlyView}>
+              <Image
+                  source={IconUtils.iconPath(props.currentlyIcon)}
+                  style={{width: 130, height: 130}}
+              />
+              <Text style={styles.currentlyData}>
+                  {'--'}
+              </Text>
+          </View>
+      );
+  } else {
+      return (
+          <View style={styles.currentlyView}>
+              <Image
+                  source={IconUtils.iconPath(props.currentlyIcon)}
+                  style={{width: 130, height: 130}}
+              />
+              <Text style={styles.currentlyData}>
+                  {TemperatureUnitConversion.fahrenheitToCelsius(
+                      props.currentlyTemperature,
+                  )}
+                  {'\u2103'}
+              </Text>
+          </View>
+      );
+  }
 };
 export default CurrentlyView;
 

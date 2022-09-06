@@ -13,7 +13,26 @@ import {TemperatureUnitConversion} from '../utils/TemperatureUnitConversion';
 import {DateFormatter} from '../utils/DateFormatter';
 
 const DailyList = props => {
+  //creating an empty array for default values
+  const defaultList = [ {}, {}, {}, {}, {}, {}];
+
+  const defaultItems = () => {
+    return (
+        <View style={styles.itemContainer}>
+          <Image
+              source={require('../assets/sunny-cloudy.png')}
+              style={{marginVertical: -25, marginStart: 15}}
+          />
+          <Text style={styles.date}>{'--'}</Text>
+          <Text style={styles.temperature}>
+            {'--'}
+          </Text>
+        </View>
+    );
+  }
+
   const itemToRender = ({item}) => {
+
     const iconSource = IconUtils.iconPath(item.icon);
     const formattedDate = DateFormatter.formattedDate(item.time);
     const minDegree = TemperatureUnitConversion.fahrenheitToCelsius(
@@ -37,23 +56,44 @@ const DailyList = props => {
     );
   };
 
-  return (
+  if (props.dailyData !== null){
+    return (
+        <View style={styles.container}>
+          <FlatList
+              data={props.dailyData}
+              renderItem={itemToRender}
+              keyExtractor={(item, index) => index}
+              ListHeaderComponent={
+                <CurrentlyView
+                    currentlyTemperature={props.currentlyTemperature}
+                    currentlyIcon={props.currentlyIcon}
+                />
+              }
+              ListHeaderComponentStyle={{height: verticalFlatListHeight / 2}}
+              showsVerticalScrollIndicator={false}
+          />
+        </View>
+    );
+  } else {
+    return(
     <View style={styles.container}>
       <FlatList
-        data={props.dailyData}
-        renderItem={itemToRender}
-        keyExtractor={(item, index) => index}
-        ListHeaderComponent={
-          <CurrentlyView
-            currentlyTemperature={props.currentlyTemperature}
-            currentlyIcon={props.currentlyIcon}
-          />
-        }
-        ListHeaderComponentStyle={{height: verticalFlatListHeight / 2}}
-        showsVerticalScrollIndicator={false}
+          data={defaultList}
+          renderItem={defaultItems}
+          keyExtractor={(item, index) => index}
+          ListHeaderComponent={
+            <CurrentlyView
+                currentlyTemperature={props.currentlyTemperature}
+                currentlyIcon={props.currentlyIcon}
+            />
+          }
+          ListHeaderComponentStyle={{height: verticalFlatListHeight / 2}}
+          showsVerticalScrollIndicator={false}
       />
     </View>
-  );
+    )
+  }
+
 };
 const verticalFlatListHeight = (Dimensions.get('window').height * 3) / 4;
 const styles = StyleSheet.create({
@@ -74,14 +114,14 @@ const styles = StyleSheet.create({
     height: 20,
     fontWeight: 'bold',
     color: 'white',
-    paddingStart: 20,
+    paddingStart: 10,
   },
 
   temperature: {
     fontSize: 20,
     fontWeight: 'bold',
     color: 'white',
-    paddingEnd: 20,
+    paddingEnd: 30,
     alignContent: 'flex-end',
   },
 });
