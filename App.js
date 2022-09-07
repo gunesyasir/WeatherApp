@@ -1,9 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
-  ImageBackground,
-  SafeAreaView,
-  StatusBar,
-  StyleSheet,
+    AppState,
+    ImageBackground,
+    SafeAreaView,
+    StatusBar,
+    StyleSheet,
 } from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {checkLocationPermission} from './src/fetchAPI/UserPermission';
@@ -12,37 +13,63 @@ import {fetchFromWeatherApi} from './src/fetchAPI/Forecast';
 import HourlyList from './src/View/HourlyView';
 import DailyList from './src/View/DailyView';
 import {LocationAlert} from "./src/View/AlertView";
+import {check, PERMISSIONS, RESULTS} from "react-native-permissions";
 
 const App = () => {
 
-  const [hourlyData, setHourlyData] = useState(null);
-  const [dailyData, setDailyData] = useState(null);
-  const [currentlyTemperature, setCurrentlyTemperature] = useState(null);
-  const [currentlyIcon, setCurrentlyIcon] = useState("partly-cloudy-day");
+    const appState = useRef(AppState.currentState);
+    const [hourlyData, setHourlyData] = useState(null);
+    const [dailyData, setDailyData] = useState(null);
+    const [currentlyTemperature, setCurrentlyTemperature] = useState(null);
+    const [currentlyIcon, setCurrentlyIcon] = useState("partly-cloudy-day");
 
-  useEffect(() => {
-    checkLocationPermission().then(
-      isPermissionGiven => {
-        if (isPermissionGiven) {
-          getUserLocation().then(locationResult => {
-            fetchFromWeatherApi(locationResult[0], locationResult[1]).then(
-              weatherData => {
-                setCurrentlyTemperature(weatherData.currently.temperature);
-                setCurrentlyIcon(weatherData.currently.icon);
-                setHourlyData(weatherData.hourly.data);
-                setDailyData(weatherData.daily.data);
-              },
-            );
-          });
-        } else {
-            LocationAlert()
-        }
-      },
-      error => {
-        console.log(error);
-      },
-    );
+    useEffect(() => {
+        permissionCheck()
+
+        const appStateListener = AppState.addEventListener("change", async nextAppState => {
+            if (
+                appState.current.match(/inactive|background/) &&
+                nextAppState === "active"
+            ) {
+                const permissionStatus = await check(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION)
+                if(permissionStatus === RESULTS.GRANTED || permissionStatus === RESULTS.LIMITED){
+                    fetchData()
+                }
+            }
+            appState.current = nextAppState;
+        });
+
+      return () => {
+          appStateListener.remove();
+      };
   }, []);
+
+    const permissionCheck = () => {
+        checkLocationPermission().then(
+            isPermissionGiven => {
+                if (isPermissionGiven) {
+                    fetchData()
+                } else {
+                    LocationAlert()
+                }
+            },
+            error => {
+                console.log(error);
+            },
+        );
+    }
+    const fetchData = () => {
+        getUserLocation().then(locationResult => {
+            fetchFromWeatherApi(locationResult[0], locationResult[1]).then(
+                weatherData => {
+                    setCurrentlyTemperature(weatherData.currently.temperature);
+                    setCurrentlyIcon(weatherData.currently.icon);
+                    setHourlyData(weatherData.hourly.data);
+                    setDailyData(weatherData.daily.data);
+                },
+            );
+        });
+    }
 
     return (
         <ImageBackground
@@ -69,7 +96,6 @@ const App = () => {
 const styles = StyleSheet.create({
   safeAreaContainer: {
     flex: 1,
-    // backgroundColor: '#3a93cf',
   },
 
   image: {
