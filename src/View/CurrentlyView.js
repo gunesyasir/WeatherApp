@@ -1,5 +1,5 @@
 import React from 'react';
-import {Dimensions, Image, StyleSheet, Text, View} from 'react-native';
+import {ActivityIndicator, Dimensions, Image, Modal, StyleSheet, Text, View} from 'react-native';
 import {TemperatureUnitConversion} from '../utils/TemperatureUnitConversion';
 import {IconUtils} from '../utils/IconUtils';
 

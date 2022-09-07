@@ -1,10 +1,11 @@
 import {
-  Dimensions,
-  FlatList,
-  Image,
-  StyleSheet,
-  Text,
-  View,
+    ActivityIndicator,
+    Dimensions,
+    FlatList,
+    Image, Modal,
+    StyleSheet,
+    Text,
+    View,
 } from 'react-native';
 import React from 'react';
 import {IconUtils} from '../utils/IconUtils';
@@ -70,8 +71,8 @@ const DailyList = props => {
                 />
               }
               ListHeaderComponentStyle={{height: verticalFlatListHeight / 2}}
-              showsVerticalScrollIndicator={false}
-          />
+              showsVerticalScrollIndicator={false}>
+          </FlatList>
         </View>
     );
   } else {
@@ -87,9 +88,10 @@ const DailyList = props => {
                 currentlyIcon={props.currentlyIcon}
             />
           }
+
           ListHeaderComponentStyle={{height: verticalFlatListHeight / 2}}
-          showsVerticalScrollIndicator={false}
-      />
+          showsVerticalScrollIndicator={false}>
+      </FlatList>
     </View>
     )
   }

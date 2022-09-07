@@ -57,8 +57,8 @@ const HourlyList = (props) => {
                     renderItem={defaultItems}
                     keyExtractor={(item, index) => index}
                     horizontal={true}
-                    showsHorizontalScrollIndicator={false}
-                />
+                    showsHorizontalScrollIndicator={false}>
+                </FlatList>
             </View>
         );
     }

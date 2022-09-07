@@ -1,10 +1,11 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {
+    ActivityIndicator,
     AppState,
     ImageBackground,
     SafeAreaView,
     StatusBar,
-    StyleSheet,
+    StyleSheet, View,
 } from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {checkLocationPermission} from './src/fetchAPI/UserPermission';
@@ -22,6 +23,7 @@ const App = () => {
     const [dailyData, setDailyData] = useState(null);
     const [currentlyTemperature, setCurrentlyTemperature] = useState(null);
     const [currentlyIcon, setCurrentlyIcon] = useState("partly-cloudy-day");
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         permissionCheck()
@@ -48,6 +50,7 @@ const App = () => {
         checkLocationPermission().then(
             isPermissionGiven => {
                 if (isPermissionGiven) {
+                    setIsLoading(true)
                     fetchData()
                 } else {
                     LocationAlert()
@@ -66,6 +69,7 @@ const App = () => {
                     setCurrentlyIcon(weatherData.currently.icon);
                     setHourlyData(weatherData.hourly.data);
                     setDailyData(weatherData.daily.data);
+                    setIsLoading(false)
                 },
             );
         });
@@ -76,32 +80,46 @@ const App = () => {
             source={require('./src/assets/background2.jpg')}
             resizeMode="cover"
             style={styles.image}>
+            {
+                isLoading ?
+                    <View style={styles.spinnerContainer}>
+                        <ActivityIndicator
+                            size={"large"}
+                            color={"white"}/>
+                    </View> : null
+            }
             <SafeAreaView style={styles.safeAreaContainer}>
-
                 <StatusBar backgroundColor={Colors.translucent}/>
-
                 <DailyList
                     dailyData={dailyData}
                     currentlyIcon={currentlyIcon}
-                    currentlyTemperature={currentlyTemperature}
-                />
-
+                    currentlyTemperature={currentlyTemperature} />
                 <HourlyList data={hourlyData}/>
-
             </SafeAreaView>
         </ImageBackground>
     );
 };
 
 const styles = StyleSheet.create({
-  safeAreaContainer: {
-    flex: 1,
-  },
+    safeAreaContainer: {
+        flex: 1,
+    },
 
-  image: {
-    flex: 1,
-    justifyContent: 'center',
-  },
+    image: {
+        flex: 1,
+        justifyContent: 'center',
+    },
+    spinnerContainer: {
+        position: 'absolute',
+        elevation: 10,
+        zIndex: 10,
+        height: '100%',
+        width: '100%',
+        top: 0,
+        left: 0,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
 });
 
 export default App;
